@@ -10,6 +10,10 @@ Blog kỹ thuật nhiều tác giả, lấy cảm hứng giao diện từ Laraca
 - **RLS** là lớp phân quyền cuối cùng. Hàm SECURITY DEFINER nằm trong schema `private`, không lộ qua `/rest/v1/rpc`.
 - **Markdown** render ở server: GFM, sanitize, slug heading, highlight bằng Shiki, sinh mục lục và thời gian đọc.
 
+## Cấu trúc thư mục
+
+Xem mục **Code conventions** trong `AGENTS.md`: `app/` chỉ ghép trang, logic nằm trong `features/<tên>/`, UI dùng chung ở `components/ui`, hằng số ở `config/` và `features/<tên>/constants.ts`.
+
 ## Chạy local
 
 ```bash

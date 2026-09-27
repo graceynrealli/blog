@@ -1,11 +1,8 @@
 import type { RenderedMarkdown } from "@/lib/markdown/types";
+import { unwrapEmbedded } from "@/lib/supabase/embedded";
 
-import type { CategoryRow, Embedded, PostDetailRow, PostSummaryRow } from "./rows";
+import type { CategoryRow, PostDetailRow, PostSummaryRow } from "./rows";
 import type { AuthorRef, CategoryNode, PostDetail, PostSummary, TagRef } from "./types";
-
-export function unwrapEmbedded<T>(value: Embedded<T>): T | null {
-  return Array.isArray(value) ? (value[0] ?? null) : value;
-}
 
 function toAuthors(rows: PostSummaryRow["post_authors"]): AuthorRef[] {
   return [...rows]

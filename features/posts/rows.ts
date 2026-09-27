@@ -1,9 +1,7 @@
+import type { Embedded } from "@/lib/supabase/embedded";
 import type { Tables } from "@/types/database";
 
 // Shapes of the rows returned by the selects in ./selects.ts.
-
-/** PostgREST returns an object or an array for embeds depending on the relation. */
-export type Embedded<T> = T | T[] | null;
 
 type PostRow = Tables<"posts">;
 

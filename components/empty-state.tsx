@@ -1,8 +1,0 @@
-export function EmptyState({ title, children }: { title: string; children?: React.ReactNode }) {
-  return (
-    <div className="rounded-lg border border-dashed border-border bg-surface/40 p-10 text-center">
-      <p className="font-display text-lg font-bold">{title}</p>
-      {children && <div className="mt-2 text-sm text-muted">{children}</div>}
-    </div>
-  );
-}

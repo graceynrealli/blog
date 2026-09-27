@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+import { readSupabaseEnv } from "@/lib/env-keys";
 import type { Database } from "@/types/database";
 
 import { authCookieOptions } from "./cookie-options";
@@ -12,11 +13,10 @@ import { authCookieOptions } from "./cookie-options";
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request });
 
-  const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_PUBLISHABLE_KEY ?? process.env.SUPABASE_ANON_KEY;
-  if (!url || !key) return { response, userId: null };
+  const env = readSupabaseEnv();
+  if (!env) return { response, userId: null };
 
-  const supabase = createServerClient<Database>(url, key, {
+  const supabase = createServerClient<Database>(env.url, env.key, {
     cookieOptions: authCookieOptions,
     cookies: {
       getAll() {
@@ -32,5 +32,5 @@ export async function updateSession(request: NextRequest) {
 
   // getClaims() verifies the JWT and refreshes an expired session.
   const { data } = await supabase.auth.getClaims();
-  return { response, userId: (data?.claims?.sub as string | undefined) ?? null };
+  return { response, userId: data?.claims?.sub ?? null };
 }

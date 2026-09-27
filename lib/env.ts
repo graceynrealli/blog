@@ -1,23 +1,17 @@
 import "server-only";
 
-/**
- * Server-only environment. None of these are prefixed with NEXT_PUBLIC_, so
- * they are never bundled into browser JavaScript (BFF: the browser never talks
- * to Supabase directly).
- */
-export function getSupabaseEnv(): { url: string; key: string } | null {
-  const url = process.env.SUPABASE_URL;
-  const key = process.env.SUPABASE_PUBLISHABLE_KEY ?? process.env.SUPABASE_ANON_KEY;
-  if (!url || !key) return null;
-  return { url, key };
+import { DEFAULT_SITE_URL, ENV_KEYS, readSupabaseEnv } from "./env-keys";
+
+export function getSupabaseEnv() {
+  return readSupabaseEnv();
 }
 
-export function requireSupabaseEnv(): { url: string; key: string } {
-  const env = getSupabaseEnv();
+export function requireSupabaseEnv() {
+  const env = readSupabaseEnv();
   if (!env) {
-    throw new Error("Missing SUPABASE_URL or SUPABASE_PUBLISHABLE_KEY. See .env.example.");
+    throw new Error(`Missing ${ENV_KEYS.supabaseUrl} or ${ENV_KEYS.supabasePublishableKey}. See .env.example.`);
   }
   return env;
 }
 
-export const siteUrl = process.env.SITE_URL ?? "http://localhost:3000";
+export const siteUrl = process.env[ENV_KEYS.siteUrl] ?? DEFAULT_SITE_URL;

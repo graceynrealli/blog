@@ -1,4 +1,4 @@
-import type { TocItem } from "@/lib/markdown";
+import type { TocItem } from "@/lib/markdown/types";
 import type { Enums } from "@/types/database";
 
 // DTOs: the only post shapes that leave the server. Internal columns

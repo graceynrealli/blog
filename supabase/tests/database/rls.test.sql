@@ -6,6 +6,10 @@ set local search_path = public, extensions;
 select plan(24);
 
 -- Fixtures -------------------------------------------------------------------
+-- Start from empty tables so counts don't depend on seed.sql. Rolled back at the end.
+truncate public.post_tags, public.post_authors, public.posts, public.tags, public.series, public.categories cascade;
+delete from auth.users;
+
 insert into auth.users (id, email, raw_user_meta_data) values
   ('00000000-0000-0000-0000-00000000000a', 'admin@example.com', '{"full_name":"Admin"}'),
   ('00000000-0000-0000-0000-00000000000e', 'editor@example.com', '{}'),

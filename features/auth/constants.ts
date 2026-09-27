@@ -29,3 +29,6 @@ export const LOGIN_FORM_FIELDS = {
   email: "email",
   next: "next",
 } as const;
+
+/** Higher rank includes every permission of the ranks below it. */
+export const ROLE_RANK = { reader: 0, author: 1, editor: 2, admin: 3 } as const;

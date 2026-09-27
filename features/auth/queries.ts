@@ -8,7 +8,7 @@ import { createClient } from "@/lib/supabase/server";
 import { toSessionUser } from "./mappers";
 import type { SessionUser } from "./types";
 
-export const PROFILE_SESSION_SELECT = "username, display_name, avatar_url, role" as const;
+export const PROFILE_SESSION_SELECT = "id, username, display_name, avatar_url, role" as const;
 
 /** The signed-in user's profile, at most once per request. */
 export const getSessionUser = cache(async (): Promise<SessionUser | null> => {

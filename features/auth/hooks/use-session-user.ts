@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 
 import { ROUTES } from "@/config/routes";
 
-import type { MeResponse, SessionUser } from "../types";
+import type { MeResponse, PublicSessionUser } from "../types";
 
 /** `undefined` while loading, `null` when signed out. */
-export type SessionUserState = SessionUser | null | undefined;
+export type SessionUserState = PublicSessionUser | null | undefined;
 
 /**
  * Pages are static, so the signed-in user is fetched from our own API after

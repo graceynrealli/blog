@@ -3,7 +3,7 @@ begin;
 create extension if not exists pgtap with schema extensions;
 set local search_path = public, extensions;
 
-select plan(24);
+select plan(27);
 
 -- Fixtures -------------------------------------------------------------------
 -- Start from empty tables so counts don't depend on seed.sql. Rolled back at the end.
@@ -129,6 +129,11 @@ select is(
   'Draft',
   'author cannot edit a post they do not author'
 );
+select throws_ok(
+  $$ select merge_tags(101, 102) $$,
+  '42501', 'only editors can merge tags',
+  'author cannot merge tags'
+);
 
 -- Editor ---------------------------------------------------------------------
 set local role authenticated;
@@ -136,6 +141,17 @@ set local request.jwt.claim.sub = '00000000-0000-0000-0000-00000000000e';
 select lives_ok(
   $$ update posts set status = 'published' where id = '10000000-0000-0000-0000-000000000003' $$,
   'editor can publish'
+);
+insert into tags (id, slug, name, status, created_by) overriding system value values (103, 'next-js', 'next-js', 'approved', '00000000-0000-0000-0000-00000000000e');
+insert into post_tags (post_id, tag_id) values ('10000000-0000-0000-0000-000000000002', 103);
+select lives_ok(
+  $$ select merge_tags(103, 101) $$,
+  'editor can merge a duplicate tag'
+);
+select is(
+  (select count(*)::int from post_tags where tag_id = 101 and post_id = '10000000-0000-0000-0000-000000000002'),
+  1,
+  'merging keeps one tag per post'
 );
 reset role;
 

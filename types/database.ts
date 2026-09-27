@@ -311,6 +311,7 @@ export type Database = {
     Views: { [_ in never]: never };
     Functions: {
       immutable_unaccent: { Args: { "": string }; Returns: string };
+      merge_tags: { Args: { p_source: number; p_target: number }; Returns: undefined };
       set_user_role: { Args: { p_role: UserRole; p_user_id: string }; Returns: undefined };
     };
     Enums: {

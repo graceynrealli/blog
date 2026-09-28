@@ -16,8 +16,9 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 app/                  Routes only: compose feature components, no business logic
 components/ui/        Shared, feature-agnostic UI (Button, Card, Container, Input, ...)
 components/layout/    Site chrome (header, footer, logo, skip link)
+components/providers/ App-wide client providers (TanStack Query)
 config/               App-wide constants: routes, navigation, site info, fonts
-lib/                  Generic helpers with no feature knowledge (env, supabase, markdown, format, utils)
+lib/                  Generic helpers and hooks with no feature knowledge (env, supabase, markdown, format, utils)
 features/<name>/
   constants.ts        Named values: cache tags, limits, labels, error codes
   types.ts            DTOs that leave the server
@@ -26,7 +27,9 @@ features/<name>/
   mappers.ts          Row -> DTO
   schemas.ts          zod schemas
   queries.ts          Reads (server-only)
-  actions.ts          Writes (Server Actions)
+  actions.ts          Writes (Server Actions); a folder actions/ when there are several groups
+  services/           Server-only steps shared by several actions (e.g. syncing tags, cache refresh)
+  api.ts              Browser-side fetchers for this feature's /api routes
   utils/              Pure helpers, one concern per file
   hooks/              Client hooks
   components/         Components for this feature

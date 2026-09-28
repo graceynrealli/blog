@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { toCategoryTree, toPostSummary, unwrapEmbedded } from "./mappers";
+import { toCategoryTree, toPostSummary } from "./mappers";
 import type { PostSummaryRow } from "./rows";
 
 const row: PostSummaryRow = {
@@ -20,12 +20,6 @@ const row: PostSummaryRow = {
 };
 
 describe("post mappers", () => {
-  it("unwraps embeds given as arrays or objects", () => {
-    expect(unwrapEmbedded([1])).toBe(1);
-    expect(unwrapEmbedded(2)).toBe(2);
-    expect(unwrapEmbedded([])).toBeNull();
-  });
-
   it("orders authors by position and drops hidden tags", () => {
     const post = toPostSummary(row);
     expect(post.authors.map((a) => a.username)).toEqual(["a", "b"]);
